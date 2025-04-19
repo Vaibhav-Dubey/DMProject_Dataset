@@ -124,28 +124,12 @@ def predict_health_status(model, imputer, scaler, new_data):
                        'Somewhat Active (Healthy)', 'Active (Very Healthy)', 
                        'Highly Active (Extremely Healthy)']
     
-    return health_statuses[prediction], probabilities
+    return {
+        'prediction': health_statuses[prediction],
+        'probabilities': probabilities,
+        'status_labels': ['Sedentary', 'Low Active', 'Somewhat Active', 'Active', 'Highly Active']
+    }
 
 if __name__ == "__main__":
     # Train the XGBoost model and get the trained model and preprocessing objects
     model, imputer, scaler = train_xgboost()
-    
-    # Example usage
-    example_data = {
-        'TotalSteps': 8000,
-        'VeryActiveMinutes': 30,
-        'FairlyActiveMinutes': 45,
-        'LightlyActiveMinutes': 120,
-        'SedentaryMinutes': 300,
-        'Calories': 2000,
-        'total_sleep_minutes': 480,
-        'HeartRate': 70,
-        'BMI': 25
-    }
-    
-    print("\nExample Prediction:")
-    status, probabilities = predict_health_status(model, imputer, scaler, example_data)
-    print(f"Predicted Health Status: {status}")
-    print("\nProbability estimates for each class:")
-    for i, prob in enumerate(probabilities):
-        print(f"{['Sedentary', 'Low Active', 'Somewhat Active', 'Active', 'Highly Active'][i]}: {prob:.2%}")
