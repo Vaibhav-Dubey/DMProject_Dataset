@@ -2,7 +2,7 @@
 import pandas as pd
 
 # Load the dataset
-file_path = "./merged_ds1_grouped_activity.csv"
+file_path = ".cd/merged_ds1_grouped_activity.csv"
 df = pd.read_csv(file_path)
 df_filled_per_user = df.groupby("id").apply(lambda group: group.fillna(group.median(numeric_only=True))).reset_index(drop=True)
 
